@@ -12,11 +12,11 @@ Script to input the power of the LATTE laser on a daily basis
 Still to be done:
     - All the plotting
     - Warning for entries containing the same date and how this has to be delt with
-    - 
+    - Stop save button after first press
 """
 
-
 import tkinter as tk
+#import numpy as np
 import datetime
 
 # Add an exit button
@@ -26,21 +26,24 @@ def close_window():
 
 # Functions for GUI buttons
 def save():
-    date       = Date.get() 
+    today      = Date.get()
+    date       = today[6:10]+today[3:5]+today[0:2]
     Regen      = float(Regen_Ene.get())
     Powerlite1 = float(PL1_Pow.get())
     Powerlite2 = float(PL2_Pow.get())
     Full_Power = float(Full_Pow.get())
     fp =  open("LATTE_Laser_Power_History.txt","a")            # create text file, 'w' for write, 'a' for append.
-    # fp.write("%s\t %s\t %s\t %s\t %s\n" % ("date", "Regen energy (mJ)", "Powerlite 1 (W)", "Powerlite 2 (W)", "Full power (W)"))
+    #fp.write("%s\t %s\t %s\t %s\t %s\n" % ("date", "Regen energy (mJ)", "Powerlite 1 (W)", "Powerlite 2 (W)", "Full power (W)"))
     fp.write("%s\t %0.2f\t %0.2f\t %0.2f\t %0.2f\n" % (date, Regen, Powerlite1, Powerlite2, Full_Power))
     fp.close()
     
 def plot():
     print("Button doesn't do anything yet")
+    data = open("LATTE_Laser_Power_History.txt","r")
+    data.close()
+    print("Button doesn't do anything yet")
 
-
-today = datetime.date.today().__str__()
+today = datetime.date.today().strftime('%d/%m/%Y').__str__()
 
 # Main
 window = tk.Tk()      # Root object, creates blank window
