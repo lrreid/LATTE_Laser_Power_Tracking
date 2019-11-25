@@ -13,8 +13,11 @@ Still to be done:
     - Warning for entries containing the same date and how this has to be delt with
     - Stop save button after first press
     - General tiding and comments
+    - Only show last x days of data, make xticks appropriate. Every 5 days?
+    - Turn into execuitable?
 """
 
+################### Import functions ###################
 import tkinter as tk
 import datetime
 import numpy as np
@@ -22,7 +25,9 @@ import matplotlib.pyplot as plt
 from matplotlib.dates import DateFormatter
 
 fsize = 12                                  # font size for axis lables, ticks and annotations
+today = datetime.date.today().strftime('%d/%m/%Y').__str__()
 
+################### Define functions for buttons ###################
 # Add an exit button
 def close_window():
     window.destroy()
@@ -48,7 +53,7 @@ def plot():
 
     D_max = np.amax(dates)     # Find first data point for min
     D_min = np.amin(dates)     # Find most recent data point for max
-    Regen_target = np.array([2.0, 2.0])
+    Regen_target = np.array([2.0, 2.0])     # Targer energy for regen is 2 mJ
     timespan = np.array([D_min, D_max])
     
     PL1_Ene  = np.transpose(np.array([data[:,2]*100]))     # Puse energy in mJ for Powerlite 1
@@ -86,9 +91,7 @@ def plot():
     ax2.xaxis.set_major_formatter(DateFormatter("%d/%m"))
     plt.legend(bbox_to_anchor=(0.01, 0.25), loc='upper left', borderaxespad=0.)
 
-
-today = datetime.date.today().strftime('%d/%m/%Y').__str__()
-
+################### GUI ###################
 # Main
 window = tk.Tk()      # Root object, creates blank window
 window.title("LATTE Laser power monitoring")
@@ -138,10 +141,11 @@ window.grid_rowconfigure(8, minsize=20)         # Add white space before buttons
 
 # add a save button
 tk.Button(window, text="Save", width=6, command=save) .grid(row=9,column=0, sticky=tk.W)
+# add a button to plot measurements
 tk.Button(window, text="Plot", width=6, command=plot) .grid(row=9,column=1, sticky=tk.W)
 
 window.grid_rowconfigure(10, minsize=20)         # Add white space before buttons
-
+# add a button to exit program
 tk.Button(window, text="Exit", width=6, command=close_window) .grid(row=11,column=0, sticky=tk.W)
 
 # run the main loop
