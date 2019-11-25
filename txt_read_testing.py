@@ -6,18 +6,17 @@ Created on Sun Nov 24 15:18:38 2019
 
 Quick script to test the reading and plotting of the history data file
 
-This is not going well
-    - can't plot dates
+Plotting is now complete and moved to main script
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from datetime import datetime
+import datetime
 from matplotlib.dates import DateFormatter
 
 fsize = 12                                  # font size for axis lables, ticks and annotations
 
 data     = np.loadtxt(open("LATTE_Laser_Power_History.txt"), skiprows=1)
-num2date = [datetime.strptime(str(int(data[k,0])), '%Y%m%d').date() for k in range(len(data[:,0]))]
+num2date = [datetime.datetime.strptime(str(int(data[k,0])), '%Y%m%d').date() for k in range(len(data[:,0]))]
 dates    = np.array(num2date, dtype='datetime64')
 
 D_max = np.amax(dates)     # Find first data point for min
