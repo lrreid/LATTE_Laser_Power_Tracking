@@ -10,7 +10,6 @@ Script to input the power of the LATTE laser on a daily basis
 - Plots made to show the laser performance over time
 
 Still to be done:
-    - Stop save button after first press
     - General tiding and comments
     - Turn into execuitable?
 """
