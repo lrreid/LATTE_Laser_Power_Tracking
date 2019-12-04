@@ -16,7 +16,6 @@ Still to be done:
     - Only show last x days of data, make xticks appropriate. Every 5 days?
     - Turn into execuitable?
     - Plot lables not appearing
-    - Display saying data has saved
 """
 
 ################### Import functions ###################
@@ -48,6 +47,9 @@ def save():
     #fp.write("%s\t %s\t %s\t %s\t %s\t %s\n" % ("date", "Micra Power (mW)", "Regen energy (mJ)", "Powerlite 1 (W)", "Powerlite 2 (W)", "Full power (W)"))
     fp.write("%s\t %0.2f\t %0.2f\t %0.2f\t %0.2f\t %0.2f\n" % (date, Micra, Regen, Powerlite1, Powerlite2, Full_Power))
     fp.close()
+    Message = tk.Tk()      # Root object, creates blank window
+    tk.Label(Message, text="Data saved",bg="white",fg="black",font="none 10 bold") .grid(row=0, column=0, sticky=tk.W)
+    Message.mainloop()
 
 def plot():
     data     = np.loadtxt(open("LATTE_Laser_Power_History.txt"), skiprows=1)
@@ -94,6 +96,7 @@ def plot():
     ax2.xaxis.set_major_formatter(DateFormatter("%d/%m"))
     plt.legend(bbox_to_anchor=(0.01, 0.40), loc='upper left', borderaxespad=0.)
 
+
 ################### GUI ###################
 # Main
 window = tk.Tk()      # Root object, creates blank window
@@ -104,7 +107,7 @@ window.configure(background="white")
 tk.Label(window, text="LATTE laser power monitoring",bg="white",fg="black",font="none 10 bold") .grid(row=0, column=0, sticky=tk.W)
 
 # create label
-tk.Label(window, text="Date:",bg="white",fg="black",font="none 10 bold") .grid(row=1, column=0, sticky=tk.W)
+tk.Label(window, text="Date",bg="white",fg="black",font="none 10 bold") .grid(row=1, column=0, sticky=tk.W)
 
 # create a text entry box
 Date = tk.Entry(window, width=20, bg="white",textvariable=today)
@@ -114,51 +117,54 @@ Date.grid(row=1,column=1,sticky=tk.W)
 window.grid_rowconfigure(2, minsize=20)         # Add white space between regen and multipass entries
 
 # create label
-tk.Label(window, text="Enter Micra power [mW]",bg="white",fg="black",font="none 10 bold") .grid(row=3, column=0, sticky=tk.W)
+tk.Label(window, text="Exit of regenerative amplifier:",bg="white",fg="black",font="none 10 bold") .grid(row=3, column=0, sticky=tk.W)
+
+# create label
+tk.Label(window, text="Enter Micra power [mW]",bg="white",fg="black",font="none 10 bold") .grid(row=4, column=0, sticky=tk.W)
 
 # create a text entry box
 Micra_P = tk.Entry(window, width=20, bg="white")
-Micra_P.grid(row=3,column=1,sticky=tk.W)
+Micra_P.grid(row=4,column=1,sticky=tk.W)
 
 # create label
-tk.Label(window, text="Enter Regen energy [mJ]",bg="white",fg="black",font="none 10 bold") .grid(row=4, column=0, sticky=tk.W)
+tk.Label(window, text="Enter Regen energy [mJ]",bg="white",fg="black",font="none 10 bold") .grid(row=5, column=0, sticky=tk.W)
 
 # create a text entry box
 Regen_Ene = tk.Entry(window, width=20, bg="white")
-Regen_Ene.grid(row=4,column=1,sticky=tk.W)
+Regen_Ene.grid(row=5,column=1,sticky=tk.W)
 
-window.grid_rowconfigure(5, minsize=20)         # Add white space between regen and multipass entries
+window.grid_rowconfigure(6, minsize=20)         # Add white space between regen and multipass entries
 
 # create label
-tk.Label(window, text="Exit of multipass amplifier",bg="white",fg="black",font="none 10 bold") .grid(row=6, column=0, sticky=tk.W)
-tk.Label(window, text="Powerlite 1 [W]",bg="white",fg="black",font="none 10 bold") .grid(row=7, column=0, sticky=tk.W)
+tk.Label(window, text="Exit of multipass amplifier:",bg="white",fg="black",font="none 10 bold") .grid(row=7, column=0, sticky=tk.W)
+tk.Label(window, text="Powerlite 1 [W]",bg="white",fg="black",font="none 10 bold") .grid(row=8, column=0, sticky=tk.W)
 
 # create a text entry box
 PL1_Pow = tk.Entry(window, width=20, bg="white")
-PL1_Pow.grid(row=7,column=1,sticky=tk.W)
+PL1_Pow.grid(row=8,column=1,sticky=tk.W)
 
-tk.Label(window, text="Powerlite 2 [W]",bg="white",fg="black",font="none 10 bold") .grid(row=8, column=0, sticky=tk.W)
+tk.Label(window, text="Powerlite 2 [W]",bg="white",fg="black",font="none 10 bold") .grid(row=9, column=0, sticky=tk.W)
 
 # create a text entry box
 PL2_Pow = tk.Entry(window, width=20, bg="white")
-PL2_Pow.grid(row=8,column=1,sticky=tk.W)
+PL2_Pow.grid(row=9,column=1,sticky=tk.W)
 
-tk.Label(window, text="Full power [W]",bg="white",fg="black",font="none 10 bold") .grid(row=9, column=0, sticky=tk.W)
+tk.Label(window, text="Full power [W]",bg="white",fg="black",font="none 10 bold") .grid(row=10, column=0, sticky=tk.W)
 
 # create a text entry box
 Full_Pow = tk.Entry(window, width=20, bg="white")
-Full_Pow.grid(row=9,column=1,sticky=tk.W)
+Full_Pow.grid(row=10,column=1,sticky=tk.W)
 
-window.grid_rowconfigure(10, minsize=20)         # Add white space before buttons
+window.grid_rowconfigure(11, minsize=20)         # Add white space before buttons
 
 # add a save button
-tk.Button(window, text="Save", width=6, command=save) .grid(row=11,column=0, sticky=tk.W)
+tk.Button(window, text="Save", width=6, command=save) .grid(row=12,column=0, sticky=tk.W)
 # add a button to plot measurements
-tk.Button(window, text="Plot", width=6, command=plot) .grid(row=11,column=1, sticky=tk.W)
+Do_Plots = tk.Button(window, text="Plot", width=6, command=plot) .grid(row=12,column=1, sticky=tk.W)
 
-window.grid_rowconfigure(12, minsize=20)         # Add white space before buttons
+window.grid_rowconfigure(13, minsize=20)         # Add white space before buttons
 # add a button to exit program
-tk.Button(window, text="Exit", width=6, command=close_window) .grid(row=13,column=0, sticky=tk.W)
+tk.Button(window, text="Exit", width=6, command=close_window) .grid(row=14,column=0, sticky=tk.W)
 
 # run the main loop
 window.mainloop()
