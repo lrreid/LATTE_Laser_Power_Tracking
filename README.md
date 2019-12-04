@@ -8,6 +8,7 @@ This text file is then used to plot the history of the measurements which is use
 **The UI**
 
 The interface is a basic UI written in tkinter. A screen shot is shown below:
+
 ![Screenshot of UI](https://github.com/lrreid/LATTE_Laser_Power_Tracking/blob/master/screenshots/UI_Screenshot.PNG)
 
 The current days date is automatically added to the "Date" box in the UI but can be changed by the user if a previous days data is to be added.
@@ -18,6 +19,7 @@ The interface has three buttons:
 * Exit - Closes the program
 
 The _Save_ button can only be pressed once, after which the button grays out and cannot be pressed again. This is to prevent the same days data being saved multiple times in the text file which stores all the data. An example of this is shown below:
+
 ![Screenshot of UI after saving](https://github.com/lrreid/LATTE_Laser_Power_Tracking/blob/master/screenshots/UI_Screenshot_after_save.PNG)
 
 
@@ -25,4 +27,5 @@ The _Save_ button can only be pressed once, after which the button grays out and
 
 The _Plot_ button opens plots based on matplotlib and pyplot. Two separate subplots are shown on a single image, the left hand image shows the pulse energy from the regenerative amplifier with the target value of 2 mJ shown as a red dotted line. The right hand image shows the pulse energy at the exit of the multipass amplifier with each of the Powerlite pump lasers on individually as well as the "Full power" which is both Powerlite lasers pumping the multipass crystal.
 An example plot with example (fake) data is shown below:
+
 ![Screenshot of Plotting](https://github.com/lrreid/LATTE_Laser_Power_Tracking/blob/master/screenshots/Plots_Screenshot.PNG)
