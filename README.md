@@ -11,14 +11,14 @@ The interface is a basic UI written in tkinter. A screen shot is shown below:
 
 ![Screenshot of UI](https://github.com/lrreid/LATTE_Laser_Power_Tracking/blob/master/screenshots/UI_Screenshot.PNG)
 
-The current days date is automatically added to the "Date" box in the UI but can be changed by the user if a previous days data is to be added.
+The current days date is automatically added to the "Date" box in the UI but can be changed by the user if a previous days data is to be added. The date must be in the format DD/MM/YYYY.
 
 The interface has three buttons:
 * Save - Saves the entered values of laser power and energy into the text file _LATTE_Laser_Power_History.txt_
 * Plot - Plots the pule energy at the exit of the regenerative and multipass amplifiers for the last 30 days
 * Exit - Closes the program
 
-The _Save_ button can only be pressed once, after which the button grays out and cannot be pressed again. This is to prevent the same days data being saved multiple times in the text file which stores all the data. An example of this is shown below:
+The _Save_ button can only be pressed once, after which the button grays out and cannot be pressed again. This is to prevent the same days data being saved multiple times in the text file which stores all the data. The _Save_ function contains a for loop that checks the contents of the boxes that are to be filled in by the user. First the boxes are checked to find out if they are empty then are checked to make sure the contents contain only numbers and not strings. If one of these conditions is not met, a window pops up telling you what needs changed. Until the contents of the text boxes is correct, the _Save_ button remains active. An example of this is shown below:
 
 ![Screenshot of UI after saving](https://github.com/lrreid/LATTE_Laser_Power_Tracking/blob/master/screenshots/UI_Screenshot_after_save.PNG)
 
