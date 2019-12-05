@@ -28,22 +28,45 @@ today = datetime.date.today().strftime('%d/%m/%Y').__str__()
 # Add an exit button
 def close_window():
     window.destroy()
-    exit()
+    #exit()
 
 # Functions for GUI buttons
 def save():
-    today      = Date.get()
-    date       = today[6:10]+today[3:5]+today[0:2]
-    Micra      = float(Micra_P.get())
-    Regen      = float(Regen_Ene.get())
-    Powerlite1 = float(PL1_Pow.get())
-    Powerlite2 = float(PL2_Pow.get())
-    Full_Power = float(Full_Pow.get())
-    fp =  open("LATTE_Laser_Power_History.txt","a")            # create text file, 'w' for write, 'a' for append.
-    #fp.write("%s\t %s\t %s\t %s\t %s\t %s\n" % ("date", "Micra Power (mW)", "Regen energy (mJ)", "Powerlite 1 (W)", "Powerlite 2 (W)", "Full power (W)"))
-    fp.write("%s\t %0.2f\t %0.2f\t %0.2f\t %0.2f\t %0.2f\n" % (date, Micra, Regen, Powerlite1, Powerlite2, Full_Power))
-    fp.close()
-    Save_Data.config(state='disabled')      # Disable button after data is saved
+    Today      = Date.get()         # Extract values from text boxes
+    Micra      = Micra_P.get()
+    Regen      = Regen_Ene.get()
+    Powerlite1 = PL1_Pow.get()
+    Powerlite2 = PL2_Pow.get()
+    Full_Power = Full_Pow.get()
+    # Loop to check if any of the text boxes are empty
+    if len(Today) == 0 or len(Micra) == 0 or len(Regen) == 0 or len(Powerlite1) == 0 or len(Powerlite2) == 0 or len(Full_Power) == 0:
+        def close_Message():
+            Message.destroy()
+        Message = tk.Tk()           # Display message if empty text box is found
+        tk.Label(Message, text="One or more fields are empty",bg="white",fg="black",font="none 10 bold") .grid(row=0, column=0, sticky=tk.W)
+        tk.Button(Message, text="Exit", width=6, command=close_Message) .grid(row=1,column=0, sticky=tk.W)
+        Message.mainloop()
+    # Loop to check that text boxes contain only numbers (apart from / in dates)
+    elif Today.replace('/', '', 2).isdigit() == False or Micra.replace('.', '', 1).isdigit() == False or Regen.replace('.', '', 1).isdigit() == False or Powerlite1.replace('.', '', 1).isdigit() == False or Powerlite2.replace('.', '', 1).isdigit() == False or Full_Power.replace('.', '', 1).isdigit() == False:
+        def close_message():
+            message.destroy()
+        message = tk.Tk()           # Display message if text box contains a string
+        tk.Label(message, text="One or more fields contain a string not a number",bg="white",fg="black",font="none 10 bold") .grid(row=0, column=0, sticky=tk.W)
+        tk.Button(message, text="Exit", width=6, command=close_message) .grid(row=1,column=0, sticky=tk.W)
+        message.mainloop()
+    # If both tests pass, then save data to file
+    else:
+        date       = Today[6:10]+Today[3:5]+Today[0:2]
+        Micra      = float(Micra)
+        Regen      = float(Regen)
+        Powerlite1 = float(Powerlite1)
+        Powerlite2 = float(Powerlite2)
+        Full_Power = float(Full_Power)
+        fp =  open("LATTE_Laser_Power_History.txt","a")            # create text file, 'w' for write, 'a' for append.
+        #fp.write("%s\t %s\t %s\t %s\t %s\t %s\n" % ("date", "Micra Power (mW)", "Regen energy (mJ)", "Powerlite 1 (W)", "Powerlite 2 (W)", "Full power (W)"))
+        fp.write("%s\t %0.2f\t %0.2f\t %0.2f\t %0.2f\t %0.2f\n" % (date, Micra, Regen, Powerlite1, Powerlite2, Full_Power))
+        fp.close()
+        Save_Data.config(state='disabled')      # Disable button after data is saved
 
 def plot():
     data     = np.loadtxt(open("LATTE_Laser_Power_History.txt"), skiprows=1)
